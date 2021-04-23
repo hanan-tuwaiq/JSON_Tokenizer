@@ -10,3 +10,15 @@
 /Users/hanans/Projects/JSON_Tokenizer/JSON_Tokenizer/obj/Debug/netcoreapp3.1/JSON_Tokenizer.dll
 /Users/hanans/Projects/JSON_Tokenizer/JSON_Tokenizer/obj/Debug/netcoreapp3.1/JSON_Tokenizer.pdb
 /Users/hanans/Projects/JSON_Tokenizer/JSON_Tokenizer/obj/Debug/netcoreapp3.1/JSON_Tokenizer.genruntimeconfig.cache
+/Users/hanans/Desktop/Tuwaiq/projects/JSON_Tokenizer/JSON_Tokenizer/bin/Debug/netcoreapp3.1/JSON_Tokenizer.deps.json
+/Users/hanans/Desktop/Tuwaiq/projects/JSON_Tokenizer/JSON_Tokenizer/bin/Debug/netcoreapp3.1/JSON_Tokenizer.runtimeconfig.json
+/Users/hanans/Desktop/Tuwaiq/projects/JSON_Tokenizer/JSON_Tokenizer/bin/Debug/netcoreapp3.1/JSON_Tokenizer.runtimeconfig.dev.json
+/Users/hanans/Desktop/Tuwaiq/projects/JSON_Tokenizer/JSON_Tokenizer/bin/Debug/netcoreapp3.1/JSON_Tokenizer.dll
+/Users/hanans/Desktop/Tuwaiq/projects/JSON_Tokenizer/JSON_Tokenizer/bin/Debug/netcoreapp3.1/JSON_Tokenizer.pdb
+/Users/hanans/Desktop/Tuwaiq/projects/JSON_Tokenizer/JSON_Tokenizer/obj/Debug/netcoreapp3.1/JSON_Tokenizer.csprojAssemblyReference.cache
+/Users/hanans/Desktop/Tuwaiq/projects/JSON_Tokenizer/JSON_Tokenizer/obj/Debug/netcoreapp3.1/JSON_Tokenizer.AssemblyInfoInputs.cache
+/Users/hanans/Desktop/Tuwaiq/projects/JSON_Tokenizer/JSON_Tokenizer/obj/Debug/netcoreapp3.1/JSON_Tokenizer.AssemblyInfo.cs
+/Users/hanans/Desktop/Tuwaiq/projects/JSON_Tokenizer/JSON_Tokenizer/obj/Debug/netcoreapp3.1/JSON_Tokenizer.csproj.CoreCompileInputs.cache
+/Users/hanans/Desktop/Tuwaiq/projects/JSON_Tokenizer/JSON_Tokenizer/obj/Debug/netcoreapp3.1/JSON_Tokenizer.dll
+/Users/hanans/Desktop/Tuwaiq/projects/JSON_Tokenizer/JSON_Tokenizer/obj/Debug/netcoreapp3.1/JSON_Tokenizer.pdb
+/Users/hanans/Desktop/Tuwaiq/projects/JSON_Tokenizer/JSON_Tokenizer/obj/Debug/netcoreapp3.1/JSON_Tokenizer.genruntimeconfig.cache
