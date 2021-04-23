@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/hanans/Projects/JSON_Tokenizer/JSON_Tokenizer/JSON_Tokenizer.csproj": {}
+    "/Users/hanans/Desktop/Tuwaiq/projects/JSON_Tokenizer/JSON_Tokenizer/JSON_Tokenizer.csproj": {}
   },
   "projects": {
-    "/Users/hanans/Projects/JSON_Tokenizer/JSON_Tokenizer/JSON_Tokenizer.csproj": {
+    "/Users/hanans/Desktop/Tuwaiq/projects/JSON_Tokenizer/JSON_Tokenizer/JSON_Tokenizer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/hanans/Projects/JSON_Tokenizer/JSON_Tokenizer/JSON_Tokenizer.csproj",
+        "projectUniqueName": "/Users/hanans/Desktop/Tuwaiq/projects/JSON_Tokenizer/JSON_Tokenizer/JSON_Tokenizer.csproj",
         "projectName": "JSON_Tokenizer",
-        "projectPath": "/Users/hanans/Projects/JSON_Tokenizer/JSON_Tokenizer/JSON_Tokenizer.csproj",
+        "projectPath": "/Users/hanans/Desktop/Tuwaiq/projects/JSON_Tokenizer/JSON_Tokenizer/JSON_Tokenizer.csproj",
         "packagesPath": "/Users/hanans/.nuget/packages/",
-        "outputPath": "/Users/hanans/Projects/JSON_Tokenizer/JSON_Tokenizer/obj/",
+        "outputPath": "/Users/hanans/Desktop/Tuwaiq/projects/JSON_Tokenizer/JSON_Tokenizer/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/hanans/.config/NuGet/NuGet.Config"

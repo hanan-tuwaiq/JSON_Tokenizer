@@ -198,22 +198,47 @@ namespace JSON_Tokenizer
                 "whitespace", t.input.loop(isWhiteSpace));
         }
     }
+
+    //String tokenizer
+    public class StringTokenizer : Tokenizable
+    {
+        public override bool tokenizable(Tokenizer t)
+        {
+            return t.input.peek() == '"';
+        }
+        public override Token tokenize(Tokenizer t)
+        {
+            string buffer = "" + t.input.peek();
+            t.input.step();
+            while (t.input.hasMore())
+            {
+                buffer += t.input.peek();
+                t.input.step();
+                if (t.input.peek() == '"')
+                {
+                    buffer += t.input.peek();
+                    t.input.step();
+                    break;
+                }
+            }
+            return new Token(t.input.Position, t.input.LineNumber,
+                  "String", buffer);
+        }
+    }
+
     class Program
     {
         static void Main(string[] args)
         {
-            Tokenizer t = new Tokenizer(new Input("hanan jj"), new Tokenizable[] {
+            Tokenizer t = new Tokenizer(new Input("\"hi\" 786 \"bye\""), new Tokenizable[] {
                 new WhiteSpaceTokenizer(),
-                new IdTokenizer(new List<string>
-                {
-                    "if","else","for","fun","return"
-                }),
+                new StringTokenizer(),
                 new NumberTokenizer()
             }); ;
             Token token = t.tokenize();
             while (token != null)
             {
-                Console.WriteLine(token.Value);
+                Console.WriteLine(token.Value + " : " + token.Type);
                 token = t.tokenize();
             }
         }
