@@ -202,6 +202,7 @@ namespace JSON_Tokenizer
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("HELLO");
             Tokenizer t = new Tokenizer(new Input("hanan jj"), new Tokenizable[] {
                 new WhiteSpaceTokenizer(),
                 new IdTokenizer(new List<string>

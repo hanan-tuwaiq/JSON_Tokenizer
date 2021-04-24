@@ -10,3 +10,16 @@
 /Users/hanans/Projects/JSON_Tokenizer/JSON_Tokenizer/obj/Debug/netcoreapp3.1/JSON_Tokenizer.dll
 /Users/hanans/Projects/JSON_Tokenizer/JSON_Tokenizer/obj/Debug/netcoreapp3.1/JSON_Tokenizer.pdb
 /Users/hanans/Projects/JSON_Tokenizer/JSON_Tokenizer/obj/Debug/netcoreapp3.1/JSON_Tokenizer.genruntimeconfig.cache
+C:\Users\96655\OneDrive\Desktop\Project\JSON_Tokenizer\JSON_Tokenizer\bin\Debug\netcoreapp3.1\JSON_Tokenizer.exe
+C:\Users\96655\OneDrive\Desktop\Project\JSON_Tokenizer\JSON_Tokenizer\bin\Debug\netcoreapp3.1\JSON_Tokenizer.deps.json
+C:\Users\96655\OneDrive\Desktop\Project\JSON_Tokenizer\JSON_Tokenizer\bin\Debug\netcoreapp3.1\JSON_Tokenizer.runtimeconfig.json
+C:\Users\96655\OneDrive\Desktop\Project\JSON_Tokenizer\JSON_Tokenizer\bin\Debug\netcoreapp3.1\JSON_Tokenizer.runtimeconfig.dev.json
+C:\Users\96655\OneDrive\Desktop\Project\JSON_Tokenizer\JSON_Tokenizer\bin\Debug\netcoreapp3.1\JSON_Tokenizer.dll
+C:\Users\96655\OneDrive\Desktop\Project\JSON_Tokenizer\JSON_Tokenizer\bin\Debug\netcoreapp3.1\JSON_Tokenizer.pdb
+C:\Users\96655\OneDrive\Desktop\Project\JSON_Tokenizer\JSON_Tokenizer\obj\Debug\netcoreapp3.1\JSON_Tokenizer.csprojAssemblyReference.cache
+C:\Users\96655\OneDrive\Desktop\Project\JSON_Tokenizer\JSON_Tokenizer\obj\Debug\netcoreapp3.1\JSON_Tokenizer.AssemblyInfoInputs.cache
+C:\Users\96655\OneDrive\Desktop\Project\JSON_Tokenizer\JSON_Tokenizer\obj\Debug\netcoreapp3.1\JSON_Tokenizer.AssemblyInfo.cs
+C:\Users\96655\OneDrive\Desktop\Project\JSON_Tokenizer\JSON_Tokenizer\obj\Debug\netcoreapp3.1\JSON_Tokenizer.csproj.CoreCompileInputs.cache
+C:\Users\96655\OneDrive\Desktop\Project\JSON_Tokenizer\JSON_Tokenizer\obj\Debug\netcoreapp3.1\JSON_Tokenizer.dll
+C:\Users\96655\OneDrive\Desktop\Project\JSON_Tokenizer\JSON_Tokenizer\obj\Debug\netcoreapp3.1\JSON_Tokenizer.pdb
+C:\Users\96655\OneDrive\Desktop\Project\JSON_Tokenizer\JSON_Tokenizer\obj\Debug\netcoreapp3.1\JSON_Tokenizer.genruntimeconfig.cache
