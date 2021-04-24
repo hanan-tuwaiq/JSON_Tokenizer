@@ -401,15 +401,15 @@ namespace JSONTokenizer
         public bool tokenizeKey(Tokenizer t, List<Token> JSONTokens)
         {
             StringTokenizer stringTokenizer = new StringTokenizer();
-            if (stringTokenizer.tokenizable(t)
+            if (stringTokenizer.tokenizable(t))
             {
                 Console.WriteLine("INSIDE IF");
                 Token key = stringTokenizer.tokenize(t);
                 Console.WriteLine(key.Type);
                 Console.WriteLine(key.Value);
-                
                 if (key != null)
                 {
+                    JSONTokens.Add(key);
                     return true;
                 }
             }
@@ -429,24 +429,26 @@ namespace JSONTokenizer
             t.input.step();
             if (tokenizeKey(t, JSONTokens))
             {
+                Console.WriteLine("finish the function");
                 Token subToken;
                 if (t.input.peek() == ':') 
                 {
+                    t.input.step();
                     subToken = t.tokenize();
                     if (subToken != null)
                     {
-                        JSONToken.Add(subToken);
+                        JSONTokens.Add(subToken);
                     }
-                    else throw new Exception("Not a valid JSON!");
+                    else throw new Exception("Not a valid JSON! key is not a string");
                 } 
-                else throw new Exception("Not a valid JSON!");
+                else throw new Exception("Not a valid JSON! No colon after the key");
 
             }
             else 
             {
                 return null;
             }
-            return new Token(t.input.Position, t.input.LineNumber, "JSON", "JSON");
+            return new Token(t.input.Position, t.input.LineNumber, "JSON", "JSON", JSONTokens);
         }
     }
 
@@ -456,7 +458,7 @@ namespace JSONTokenizer
         static void Main(string[] args)
         {
 
-            Tokenizer t = new Tokenizer(new Input("{\"key\"123}"), new Tokenizable[] {
+            Tokenizer t = new Tokenizer(new Input("{\"key\":123}"), new Tokenizable[] {
                 new JSONTokenizer(),
                 new WhiteSpaceTokenizer(),
                 new NumberTokenizer(),
@@ -476,16 +478,16 @@ namespace JSONTokenizer
             {
                 Console.WriteLine("In Main() value:" + token.Value + "===" + "type:" + token.Type);
 
-                if (token.Type == "array")
+                if (token.Type == "array" || token.Type == "JSON")
                 {
                     foreach (var item in token.Tokens)
                     {
-                        Console.WriteLine("array element value:" + item.Value + "     " + "array element type:" + item.Type);
-                        if (item.Type == "array")
+                        Console.WriteLine("    element value:" + item.Value + "     " + "element type:" + item.Type);
+                        if (item.Type == "array" || item.Type == "JSON")
                         {
                             foreach (var subItem in item.Tokens)
                             {
-                                Console.WriteLine("nested element value:" + subItem.Value + "     " + "nested element type:" + subItem.Type);
+                                Console.WriteLine("       nested element value:" + subItem.Value + "     " + "nested element type:" + subItem.Type);
                             }
                         }
                     }
