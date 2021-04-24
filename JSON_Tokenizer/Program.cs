@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-namespace First
+namespace JSONTokenizer
 {
     public delegate bool InputCondition(Input input);
     public class Input
@@ -141,6 +141,7 @@ namespace First
             this.input = new Input(source);
             this.handlers = handlers;
         }
+
         public Tokenizer(Input source, Tokenizable[] handlers)
         {
             this.input = source;
@@ -262,121 +263,142 @@ namespace First
 
     public class ArrayTokenizer : Tokenizable
     {
-        public List<Token> arrayToken = new List<Token>();
+        // List<Token> arrayToken = new List<Token>();
+
         public override bool tokenizable(Tokenizer t)
         {
             char currentCharacter = t.input.peek();
-            //Console.WriteLine(currentCharacter);
+            Console.WriteLine("{0} current char", currentCharacter);
             return currentCharacter == '[';
         }
 
         public override Token tokenize(Tokenizer t)
         {
+            List<Token> arrayToken = new List<Token>();
             t.input.step();
             Token subToken;
             while (t.input.peek() != ']')
             {
+                if (t.input.peek() == '[')
+                {
+
+                    Console.WriteLine("recursion");
+                    Token recursionToken = tokenize(t);
+                    Console.WriteLine("After recursion {0}", recursionToken.Value);
+                    if (recursionToken != null)
+                    {
+                        arrayToken.Add(recursionToken);
+                    }
+                    else throw new Exception("Not a valid array");
+                }
                 if (t.input.peek() != ',')
                 {
                     subToken = t.tokenize();
-                    if (subToken != null) arrayToken.Add(subToken);
+                    if (subToken != null)
+                    {
+                        arrayToken.Add(subToken);
+                    }
                     else throw new Exception("not a valid token in the array");
-                } else
+                }
+                else
                 {
                     if (t.input.peek(2) == ']') throw new Exception("Invalid ,]");
                     t.input.step(); // pass the ,
                 }
             }
-            if (t.input.peek() == ']') 
-            { 
+            if (t.input.peek() == ']')
+            {
                 t.input.step();
+                /* foreach (var item in arrayToken)
+                 {
+                     Console.WriteLine("Array item {0}", item.Value);
+                 }*/
                 return new Token(t.input.Position, t.input.LineNumber,
                 "array", "array", arrayToken);
-
-            } else
+            }
+            else
             {
                 return null;
             }
-                
+
         }
 
 
     }
 
-
     public class NullTokenizer : Tokenizable
+    {
+        /*  private List<string> keywords;
+          public StringTokenizer(List<string> keywords)
+          {
+              this.keywords = keywords;
+          }
+        */
+        public override bool tokenizable(Tokenizer t)
         {
-            /*  private List<string> keywords;
-              public StringTokenizer(List<string> keywords)
-              {
-                  this.keywords = keywords;
-              }
-            */
-            public override bool tokenizable(Tokenizer t)
+            if (t.input.peek() == 'n' || t.input.peek() == 'N'
+                && t.input.peek(2) == 'u' || t.input.peek(2) == 'U'
+                && t.input.peek(3) == 'l' || t.input.peek(3) == 'L'
+                && t.input.peek(4) == 'l' || t.input.peek(4) == 'L')
             {
-                if (t.input.peek() == 'n' || t.input.peek() == 'N'
-                    && t.input.peek(2) == 'u' || t.input.peek(2) == 'U'
-                    && t.input.peek(3) == 'l' || t.input.peek(3) == 'L'
-                    && t.input.peek(4) == 'l' || t.input.peek(4) == 'L')
-                {
-                    t.input.step(4);
-                    return true;
-                }
-                return false;
+                t.input.step(4);
+                return true;
             }
-
-            public override Token tokenize(Tokenizer t)
-            {
-                return new Token(t.input.Position, t.input.LineNumber, "null", "null");
-            }
+            return false;
         }
 
-        public class BoolTokenizer : Tokenizable
+        public override Token tokenize(Tokenizer t)
         {
-            /*  private List<string> keywords;
-              public StringTokenizer(List<string> keywords)
-              {
-                  this.keywords = keywords;
-              }
-            */
-            string value;
-            public override bool tokenizable(Tokenizer t)
-            {
-                
-                if (t.input.peek() == 't'     || t.input.peek() == 'T'
-                    && t.input.peek(2) == 'r' || t.input.peek(2) == 'R'
-                    && t.input.peek(3) == 'u' || t.input.peek(3) == 'U'
-                    && t.input.peek(4) == 'e' || t.input.peek(4) == 'E')
-                {
-                    value = "true";
-                    t.input.step(4);
-                    return true;
-                }
-                else if (t.input.peek() == 'f' || t.input.peek() == 'F'
-                  && t.input.peek(2) == 'a'    || t.input.peek(2) == 'A'
-                  && t.input.peek(3) == 'l'    || t.input.peek(3) == 'L'
-                  && t.input.peek(4) == 's'    || t.input.peek(4) == 'S'
-                  && t.input.peek(5) == 'e'    || t.input.peek(4) == 'E') 
-                {
-                    value = "false";
-                    t.input.step(5);
-                    return true;
-                }
-                    return false;
-            }
+            return new Token(t.input.Position, t.input.LineNumber, "null", "null");
+        }
+    }
 
-            public override Token tokenize(Tokenizer t)
+    public class BoolTokenizer : Tokenizable
+    {
+        /*  private List<string> keywords;
+          public StringTokenizer(List<string> keywords)
+          {
+              this.keywords = keywords;
+          }
+        */
+        string value;
+        public override bool tokenizable(Tokenizer t)
+        {
+
+            if (t.input.peek() == 't' || t.input.peek() == 'T'
+                && t.input.peek(2) == 'r' || t.input.peek(2) == 'R'
+                && t.input.peek(3) == 'u' || t.input.peek(3) == 'U'
+                && t.input.peek(4) == 'e' || t.input.peek(4) == 'E')
             {
-                return new Token(t.input.Position, t.input.LineNumber, "boolean", value);
+                value = "true";
+                t.input.step(4);
+                return true;
             }
+            else if (t.input.peek() == 'f' || t.input.peek() == 'F'
+              && t.input.peek(2) == 'a' || t.input.peek(2) == 'A'
+              && t.input.peek(3) == 'l' || t.input.peek(3) == 'L'
+              && t.input.peek(4) == 's' || t.input.peek(4) == 'S'
+              && t.input.peek(5) == 'e' || t.input.peek(4) == 'E')
+            {
+                value = "false";
+                t.input.step(5);
+                return true;
+            }
+            return false;
         }
 
-
-        class Program
+        public override Token tokenize(Tokenizer t)
         {
-            static void Main(string[] args)
-            {
-                Tokenizer t = new Tokenizer(new Input("\"Hello\"null\"string\"false\"anotherstring\" [1, 2, \"hi\", [3,4] , 5]"), new Tokenizable[] {
+            return new Token(t.input.Position, t.input.LineNumber, "boolean", value);
+        }
+    }
+
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Tokenizer t = new Tokenizer(new Input("\"Hello\"null[55,90, false]\"string\"false[100,200]\"anotherstring\"[1,2,\"hi\",[3,4],5]"), new Tokenizable[] {
                 new WhiteSpaceTokenizer(),
                /* new IdTokenizer(new List<string>
                 {
@@ -385,22 +407,49 @@ namespace First
                 new NumberTokenizer(),
                 new StringTokenizer(),
                 new NullTokenizer(),
-                new BoolTokenizer(), 
+                new BoolTokenizer(),
                 new ArrayTokenizer()
             });
-                Token token = t.tokenize();
-                while (token != null)
-                {
-                    Console.WriteLine("value:"+token.Value +"            "+ "type:" + token.Type);
+            Token token = t.tokenize();
+            while (token != null)
+            {
+                Console.WriteLine("In Main() value:" + token.Value + "===" + "type:" + token.Type);
+
                 if (token.Type == "array")
                 {
                     foreach (var item in token.Tokens)
                     {
                         Console.WriteLine("array element value:" + item.Value + "            " + "array element type:" + item.Type);
+                        if (item.Type == "array")
+                        {
+                            foreach (var subItem in item.Tokens)
+                            {
+                                Console.WriteLine("nested element value:" + subItem.Value + "            " + "nested element type:" + subItem.Type);
+                            }
+                        }
                     }
                 }
-                    token = t.tokenize();
-                }
+
+                token = t.tokenize();
+
             }
         }
+
+        /*        public static void printTokens(Token token)
+                {
+                    if (token.Type == "array")
+                    {
+                        Console.WriteLine("value:" + token.Value + "            " + "type:" + token.Type);
+                        foreach (var item in token.Tokens)
+                        {
+                            *//*if (item.Type == "array") printTokens(item);
+                            else return;*//*
+                            Console.WriteLine("array element value:" + item.Value + "            " + "array element type:" + item.Type);
+                        }
+                    } else
+                    {
+                        Console.WriteLine("value:" + token.Value + "            " + "type:" + token.Type);
+                    }
+                }*/
     }
+}
