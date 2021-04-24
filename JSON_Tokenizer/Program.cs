@@ -392,31 +392,60 @@ namespace JSONTokenizer
             return new Token(t.input.Position, t.input.LineNumber, "boolean", value);
         }
     }
+    
+
 
     public class JSONTokenizer : Tokenizable
     {
+
+        public bool tokenizeKey(Tokenizer t, List<Token> JSONTokens)
+        {
+            StringTokenizer stringTokenizer = new StringTokenizer();
+            if (stringTokenizer.tokenizable(t)
+            {
+                Console.WriteLine("INSIDE IF");
+                Token key = stringTokenizer.tokenize(t);
+                Console.WriteLine(key.Type);
+                Console.WriteLine(key.Value);
+                
+                if (key != null)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public override bool tokenizable(Tokenizer t)
         {
-            /*          Console.WriteLine(t.input.Length);
-                      int length = t.input.Length;
-                      //Console.WriteLine("t.input.peek()  {0}", t.input.peek());
-                      //Console.WriteLine("t.input.peek(length)  {0}", t.input.peek(length));
-                      if ((t.input.peek() == '{') && (t.input.peek(length) == '}'))
-                      {
-                          t.input.step();
-                          return true;
-
-                      }
-                      else throw new Exception("Not a valid JSON! Does not begin with { or end with }");
-                      //throw new Exception("Not a valid JSON! Does not begin with { or end with }")*/
-
             char currentCharacter = t.input.peek();
-            //Console.WriteLine("{0} current char", currentCharacter);
             return currentCharacter == '{';
         }
 
         public override Token tokenize(Tokenizer t)
         {
+            List<Token> JSONTokens = new List<Token>();
+            
+            t.input.step();
+            if (tokenizeKey(t, JSONTokens))
+            {
+                Token subToken;
+                if (t.input.peek() == ':') 
+                {
+                    subToken = t.tokenize();
+                    if (subToken != null)
+                    {
+                        JSONToken.Add(subToken);
+                    }
+                    else throw new Exception("Not a valid JSON!");
+                } 
+                else throw new Exception("Not a valid JSON!");
+
+            }
+            else 
+            {
+                return null;
+            }
             return new Token(t.input.Position, t.input.LineNumber, "JSON", "JSON");
         }
     }
@@ -427,7 +456,7 @@ namespace JSONTokenizer
         static void Main(string[] args)
         {
 
-            Tokenizer t = new Tokenizer(new Input("{1,2,3"), new Tokenizable[] {
+            Tokenizer t = new Tokenizer(new Input("{\"key\"123}"), new Tokenizable[] {
                 new JSONTokenizer(),
                 new WhiteSpaceTokenizer(),
                 new NumberTokenizer(),
@@ -436,12 +465,12 @@ namespace JSONTokenizer
                 new BoolTokenizer(),
                 new ArrayTokenizer()
             });
+            
+            if (!((t.input.peek() == '{') && (t.input.peek(t.input.Length) == '}')))
+                throw new Exception("Not a valid JSON! Does not begin with { or end with }");
+
             Token token = t.tokenize();
-            if ((t.input.peek() == '{') && (t.input.peek(t.input.Length) == '}'))
-            {
-                t.input.step();
-            }
-            else throw new Exception("Not a valid JSON! Does not begin with { or end with }");
+            Console.WriteLine(t.input.Position);
 
             while (token != null)
             {
