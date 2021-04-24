@@ -85,6 +85,22 @@ namespace JSON_Tokenizer
             }
             return this;
         }
+
+        public char previous(int numOfSteps = 1)
+        {
+
+            if (this.hasLess(numOfSteps))
+            {
+
+                return this.input[Position];
+            }
+            else
+            {
+           
+                return '\0';
+            }
+        }
+
         public Input reset() { return this; }
         public char peek(int numOfSteps = 1)
         {
@@ -170,18 +186,32 @@ namespace JSON_Tokenizer
     {
         public override bool tokenizable(Tokenizer t)
         {
-            return Char.IsDigit(t.input.peek());
+            return Char.IsDigit(t.input.peek()) || t.input.peek() == '+' || t.input.peek() == '-' || t.input.peek() == '.';
         }
-        static bool isDigit(Input input)
+
+        public static bool isSign(Input input)
         {
-            return Char.IsDigit(input.peek());
+            // Console.WriteLine(input.previous());
+            return (input.peek() == '+' || input.peek() == '-') && input.previous() == 'e';
+
+        }
+
+        static bool isNumber(Input input)
+        {
+
+            return Char.IsDigit(input.peek()) || input.peek() == '.' || input.peek() == '+' || input.peek() == '-' || (input.peek() == 'e' && input.peek(2) == '+') || isSign(input);
         }
         public override Token tokenize(Tokenizer t)
         {
             return new Token(t.input.Position, t.input.LineNumber,
-                "number", t.input.loop(isDigit));
+                "number", t.input.loop(isNumber));
         }
     }
+
+
+
+
+
     public class WhiteSpaceTokenizer : Tokenizable
     {
         public override bool tokenizable(Tokenizer t)
@@ -202,7 +232,7 @@ namespace JSON_Tokenizer
     {
         static void Main(string[] args)
         {
-            Tokenizer t = new Tokenizer(new Input("hanan jj"), new Tokenizable[] {
+            Tokenizer t = new Tokenizer(new Input(" +454554 hanan jj"), new Tokenizable[] {
                 new WhiteSpaceTokenizer(),
                 new IdTokenizer(new List<string>
                 {
