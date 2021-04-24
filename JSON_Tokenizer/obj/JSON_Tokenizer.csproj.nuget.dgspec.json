@@ -1,7 +1,6 @@
 {
   "format": 1,
   "restore": {
-<<<<<<< HEAD
     "C:\\Users\\96655\\OneDrive\\Desktop\\Project\\JSON_Tokenizer\\JSON_Tokenizer\\JSON_Tokenizer.csproj": {}
   },
   "projects": {
@@ -13,19 +12,6 @@
         "projectPath": "C:\\Users\\96655\\OneDrive\\Desktop\\Project\\JSON_Tokenizer\\JSON_Tokenizer\\JSON_Tokenizer.csproj",
         "packagesPath": "C:\\Users\\96655\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\96655\\OneDrive\\Desktop\\Project\\JSON_Tokenizer\\JSON_Tokenizer\\obj\\",
-=======
-    "C:\\Users\\96655\\OneDrive\\Desktop\\معسكر طويق\\JSON_Tokenizer\\JSON_Tokenizer\\JSON_Tokenizer.csproj": {}
-  },
-  "projects": {
-    "C:\\Users\\96655\\OneDrive\\Desktop\\معسكر طويق\\JSON_Tokenizer\\JSON_Tokenizer\\JSON_Tokenizer.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\96655\\OneDrive\\Desktop\\معسكر طويق\\JSON_Tokenizer\\JSON_Tokenizer\\JSON_Tokenizer.csproj",
-        "projectName": "JSON_Tokenizer",
-        "projectPath": "C:\\Users\\96655\\OneDrive\\Desktop\\معسكر طويق\\JSON_Tokenizer\\JSON_Tokenizer\\JSON_Tokenizer.csproj",
-        "packagesPath": "C:\\Users\\96655\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\96655\\OneDrive\\Desktop\\معسكر طويق\\JSON_Tokenizer\\JSON_Tokenizer\\obj\\",
->>>>>>> 3b2a4a996b298271e608c549c979c24774f8e073
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\96655\\AppData\\Roaming\\NuGet\\NuGet.Config",

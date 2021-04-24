@@ -1,14 +1,15 @@
 {
   "version": 2,
-<<<<<<< HEAD
   "dgSpecHash": "xR3aG4jBdkU4L7vM1tXIWLZrXHunqYEbcTF+AZylFzW+hcWYrDG83kOkrOgjzDpuvvK3R2ylmCJXsfRmrFGdUw==",
   "success": true,
   "projectFilePath": "C:\\Users\\96655\\OneDrive\\Desktop\\Project\\JSON_Tokenizer\\JSON_Tokenizer\\JSON_Tokenizer.csproj",
-=======
-  "dgSpecHash": "GXuvKC3SrpjJ1RrjCmm+CGoruIy3bLD3Q0HMC26cldLMIQIyv/APiSe9wveEEHtyALHmV5qcWaz6vJcFhN7fAg==",
-  "success": true,
-  "projectFilePath": "C:\\Users\\96655\\OneDrive\\Desktop\\معسكر طويق\\JSON_Tokenizer\\JSON_Tokenizer\\JSON_Tokenizer.csproj",
->>>>>>> 3b2a4a996b298271e608c549c979c24774f8e073
   "expectedPackageFiles": [],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\96655\\OneDrive\\Desktop\\Project\\JSON_Tokenizer\\JSON_Tokenizer\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }

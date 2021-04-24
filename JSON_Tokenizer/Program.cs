@@ -87,7 +87,7 @@ namespace JSONTokenizer
         public Input reset() { return this; }
         public char peek(int numOfSteps = 1)
         {
-            if (this.hasMore()) return this.input[this.NextPosition];
+            if (this.hasMore(numOfSteps)) return this.input[this.Position + numOfSteps];
             return '\0';
         }
         public string loop(InputCondition condition)
@@ -268,7 +268,7 @@ namespace JSONTokenizer
         public override bool tokenizable(Tokenizer t)
         {
             char currentCharacter = t.input.peek();
-            Console.WriteLine("{0} current char", currentCharacter);
+            //Console.WriteLine("{0} current char", currentCharacter);
             return currentCharacter == '[';
         }
 
@@ -365,7 +365,7 @@ namespace JSONTokenizer
         public override bool tokenizable(Tokenizer t)
         {
 
-            if (t.input.peek() == 't' || t.input.peek() == 'T'
+            if (t.input.peek() == 't'     || t.input.peek() == 'T'
                 && t.input.peek(2) == 'r' || t.input.peek(2) == 'R'
                 && t.input.peek(3) == 'u' || t.input.peek(3) == 'U'
                 && t.input.peek(4) == 'e' || t.input.peek(4) == 'E')
@@ -375,10 +375,10 @@ namespace JSONTokenizer
                 return true;
             }
             else if (t.input.peek() == 'f' || t.input.peek() == 'F'
-              && t.input.peek(2) == 'a' || t.input.peek(2) == 'A'
-              && t.input.peek(3) == 'l' || t.input.peek(3) == 'L'
-              && t.input.peek(4) == 's' || t.input.peek(4) == 'S'
-              && t.input.peek(5) == 'e' || t.input.peek(4) == 'E')
+              && t.input.peek(2) == 'a'    || t.input.peek(2) == 'A'
+              && t.input.peek(3) == 'l'    || t.input.peek(3) == 'L'
+              && t.input.peek(4) == 's'    || t.input.peek(4) == 'S'
+              && t.input.peek(5) == 'e'    || t.input.peek(4) == 'E')
             {
                 value = "false";
                 t.input.step(5);
@@ -393,18 +393,43 @@ namespace JSONTokenizer
         }
     }
 
+    public class JSONTokenizer : Tokenizable
+    {
+        public override bool tokenizable(Tokenizer t)
+        {
+            /*          Console.WriteLine(t.input.Length);
+                      int length = t.input.Length;
+                      //Console.WriteLine("t.input.peek()  {0}", t.input.peek());
+                      //Console.WriteLine("t.input.peek(length)  {0}", t.input.peek(length));
+                      if ((t.input.peek() == '{') && (t.input.peek(length) == '}'))
+                      {
+                          t.input.step();
+                          return true;
+
+                      }
+                      else throw new Exception("Not a valid JSON! Does not begin with { or end with }");
+                      //throw new Exception("Not a valid JSON! Does not begin with { or end with }")*/
+
+            char currentCharacter = t.input.peek();
+            //Console.WriteLine("{0} current char", currentCharacter);
+            return currentCharacter == '{';
+        }
+
+        public override Token tokenize(Tokenizer t)
+        {
+            return new Token(t.input.Position, t.input.LineNumber, "JSON", "JSON");
+        }
+    }
+
 
     class Program
     {
         static void Main(string[] args)
         {
 
-            Tokenizer t = new Tokenizer(new Input("\"Hello\"null[55,90, false]\"string\"false[100,200]\"anotherstring\"[1,2,\"hi\",[3,4],5]"), new Tokenizable[] {
+            Tokenizer t = new Tokenizer(new Input("{1,2,3"), new Tokenizable[] {
+                new JSONTokenizer(),
                 new WhiteSpaceTokenizer(),
-               /* new IdTokenizer(new List<string>
-                {
-                    "if","else","for","fun","return"
-                }),*/
                 new NumberTokenizer(),
                 new StringTokenizer(),
                 new NullTokenizer(),
@@ -412,6 +437,12 @@ namespace JSONTokenizer
                 new ArrayTokenizer()
             });
             Token token = t.tokenize();
+            if ((t.input.peek() == '{') && (t.input.peek(t.input.Length) == '}'))
+            {
+                t.input.step();
+            }
+            else throw new Exception("Not a valid JSON! Does not begin with { or end with }");
+
             while (token != null)
             {
                 Console.WriteLine("In Main() value:" + token.Value + "===" + "type:" + token.Type);
@@ -420,12 +451,12 @@ namespace JSONTokenizer
                 {
                     foreach (var item in token.Tokens)
                     {
-                        Console.WriteLine("array element value:" + item.Value + "            " + "array element type:" + item.Type);
+                        Console.WriteLine("array element value:" + item.Value + "     " + "array element type:" + item.Type);
                         if (item.Type == "array")
                         {
                             foreach (var subItem in item.Tokens)
                             {
-                                Console.WriteLine("nested element value:" + subItem.Value + "            " + "nested element type:" + subItem.Type);
+                                Console.WriteLine("nested element value:" + subItem.Value + "     " + "nested element type:" + subItem.Type);
                             }
                         }
                     }
@@ -435,22 +466,5 @@ namespace JSONTokenizer
 
             }
         }
-
-        /*        public static void printTokens(Token token)
-                {
-                    if (token.Type == "array")
-                    {
-                        Console.WriteLine("value:" + token.Value + "            " + "type:" + token.Type);
-                        foreach (var item in token.Tokens)
-                        {
-                            *//*if (item.Type == "array") printTokens(item);
-                            else return;*//*
-                            Console.WriteLine("array element value:" + item.Value + "            " + "array element type:" + item.Type);
-                        }
-                    } else
-                    {
-                        Console.WriteLine("value:" + token.Value + "            " + "type:" + token.Type);
-                    }
-                }*/
     }
 }
