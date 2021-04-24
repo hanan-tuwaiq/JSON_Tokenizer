@@ -416,6 +416,20 @@ namespace JSONTokenizer
             return false;
         }
 
+
+        public bool tokenizeValue(Tokenizer t, List<Token> JSONTokens)
+        {
+            Token subToken;
+            subToken = t.tokenize();
+            if (subToken != null)
+            {
+                JSONTokens.Add(subToken);
+            }
+            else throw new Exception("Not a valid JSON! value is not a valid type");
+        
+            return false;
+        }
+
         public override bool tokenizable(Tokenizer t)
         {
             char currentCharacter = t.input.peek();
@@ -433,13 +447,7 @@ namespace JSONTokenizer
                 Token subToken;
                 if (t.input.peek() == ':') 
                 {
-                    t.input.step();
-                    subToken = t.tokenize();
-                    if (subToken != null)
-                    {
-                        JSONTokens.Add(subToken);
-                    }
-                    else throw new Exception("Not a valid JSON! key is not a string");
+                    t.input.step();                    
                 } 
                 else throw new Exception("Not a valid JSON! No colon after the key");
 
