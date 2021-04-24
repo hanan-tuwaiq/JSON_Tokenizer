@@ -8,24 +8,26 @@
     ".NETCoreApp,Version=v3.1": []
   },
   "packageFolders": {
-    "/Users/hanans/.nuget/packages/": {}
+    "C:\\Users\\rhm30\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/hanans/Projects/JSON_Tokenizer/JSON_Tokenizer/JSON_Tokenizer.csproj",
+      "projectUniqueName": "C:\\Users\\rhm30\\OneDrive\\Desktop\\projects\\Json-Tokenizer\\JSON_Tokenizer\\JSON_Tokenizer\\JSON_Tokenizer.csproj",
       "projectName": "JSON_Tokenizer",
-      "projectPath": "/Users/hanans/Projects/JSON_Tokenizer/JSON_Tokenizer/JSON_Tokenizer.csproj",
-      "packagesPath": "/Users/hanans/.nuget/packages/",
-      "outputPath": "/Users/hanans/Projects/JSON_Tokenizer/JSON_Tokenizer/obj/",
+      "projectPath": "C:\\Users\\rhm30\\OneDrive\\Desktop\\projects\\Json-Tokenizer\\JSON_Tokenizer\\JSON_Tokenizer\\JSON_Tokenizer.csproj",
+      "packagesPath": "C:\\Users\\rhm30\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\rhm30\\OneDrive\\Desktop\\projects\\Json-Tokenizer\\JSON_Tokenizer\\JSON_Tokenizer\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/hanans/.config/NuGet/NuGet.Config"
+        "C:\\Users\\rhm30\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -58,7 +60,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.202/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }
