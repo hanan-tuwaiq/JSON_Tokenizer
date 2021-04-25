@@ -90,6 +90,18 @@ namespace JSONTokenizer
             if (this.hasMore(numOfSteps)) return this.input[this.Position + numOfSteps];
             return '\0';
         }
+
+        public char previous(int numOfSteps = 1)
+        {
+            if (this.hasLess(numOfSteps))
+            {
+                return this.input[Position];
+            }
+            else
+            {
+                return '\0';
+            }
+        }
         public string loop(InputCondition condition)
         {
             string buffer = "";
@@ -113,7 +125,6 @@ namespace JSONTokenizer
             this.LineNumber = lineNumber;
             this.Type = type;
             this.Value = value;
-            //this.Tokens = tokens;
         }
 
         public Token(int position, int lineNumber, string type, string value, List<Token> tokens)
@@ -158,8 +169,6 @@ namespace JSONTokenizer
         public List<Token> all() { return null; }
     }
 
-
-
     public class IdTokenizer : Tokenizable
     {
         private List<string> keywords;
@@ -170,7 +179,6 @@ namespace JSONTokenizer
         public override bool tokenizable(Tokenizer t)
         {
             char currentCharacter = t.input.peek();
-            //Console.WriteLine(currentCharacter);
             return Char.IsLetter(currentCharacter) || currentCharacter == '_';
         }
         static bool isId(Input input)
@@ -187,16 +195,10 @@ namespace JSONTokenizer
 
     public class StringTokenizer : Tokenizable
     {
-        private List<string> keywords;
-        /*public StringTokenizer(List<string> keywords)
-        {
-            this.keywords = keywords;
-        }
-*/
+        //private List<string> keywords;
         public override bool tokenizable(Tokenizer t)
         {
             char currentCharacter = t.input.peek();
-            //Console.WriteLine(currentCharacter);
             return currentCharacter == '"';
         }
 
@@ -204,14 +206,12 @@ namespace JSONTokenizer
         {
             t.input.step();
             Char currentChar = t.input.Character;
-            //Console.WriteLine("t.input.Character:   {0}", currentChar);
             string buffer = "";
             buffer += currentChar;
             while (t.input.hasMore() && t.input.peek() != '"')
             {
                 t.input.step();
                 buffer += t.input.Character;
-                //Console.WriteLine("BUFFER    {0}", buffer);
             }
             if (t.input.peek() == '"')
             {
@@ -232,18 +232,27 @@ namespace JSONTokenizer
     {
         public override bool tokenizable(Tokenizer t)
         {
-            return Char.IsDigit(t.input.peek());
+            return Char.IsDigit(t.input.peek()) || t.input.peek() == '+' || t.input.peek() == '-' || t.input.peek() == '.';
         }
-        static bool isDigit(Input input)
+        public static bool isSign(Input input)
         {
-            return Char.IsDigit(input.peek());
+            return (input.peek() == '+' || input.peek() == '-') && input.previous() == 'e';
+        }
+        static bool isNumber(Input input)
+        {
+            return Char.IsDigit(input.peek()) || input.peek() == '.' ||
+                input.peek() == '+' || input.peek() == '-' ||
+                (input.peek() == 'e' && input.peek(2) == '+') || (input.peek() == 'e'
+                && input.peek(2) == '-') || isSign(input);
         }
         public override Token tokenize(Tokenizer t)
         {
             return new Token(t.input.Position, t.input.LineNumber,
-                "number", t.input.loop(isDigit));
+                "number", t.input.loop(isNumber));
         }
     }
+
+
     public class WhiteSpaceTokenizer : Tokenizable
     {
         public override bool tokenizable(Tokenizer t)
@@ -263,12 +272,9 @@ namespace JSONTokenizer
 
     public class ArrayTokenizer : Tokenizable
     {
-        // List<Token> arrayToken = new List<Token>();
-
         public override bool tokenizable(Tokenizer t)
         {
             char currentCharacter = t.input.peek();
-            //Console.WriteLine("{0} current char", currentCharacter);
             return currentCharacter == '[';
         }
 
@@ -309,10 +315,6 @@ namespace JSONTokenizer
             if (t.input.peek() == ']')
             {
                 t.input.step();
-                /* foreach (var item in arrayToken)
-                 {
-                     Console.WriteLine("Array item {0}", item.Value);
-                 }*/
                 return new Token(t.input.Position, t.input.LineNumber,
                 "array", "array", arrayToken);
             }
@@ -320,20 +322,11 @@ namespace JSONTokenizer
             {
                 return null;
             }
-
         }
-
-
     }
 
     public class NullTokenizer : Tokenizable
     {
-        /*  private List<string> keywords;
-          public StringTokenizer(List<string> keywords)
-          {
-              this.keywords = keywords;
-          }
-        */
         public override bool tokenizable(Tokenizer t)
         {
             if (t.input.peek() == 'n' || t.input.peek() == 'N'
@@ -355,30 +348,24 @@ namespace JSONTokenizer
 
     public class BoolTokenizer : Tokenizable
     {
-        /*  private List<string> keywords;
-          public StringTokenizer(List<string> keywords)
-          {
-              this.keywords = keywords;
-          }
-        */
         string value;
         public override bool tokenizable(Tokenizer t)
         {
 
-            if (t.input.peek() == 't' || t.input.peek() == 'T'
-                && t.input.peek(2) == 'r' || t.input.peek(2) == 'R'
-                && t.input.peek(3) == 'u' || t.input.peek(3) == 'U'
-                && t.input.peek(4) == 'e' || t.input.peek(4) == 'E')
+            if (t.input.peek() == 't'
+                && t.input.peek(2) == 'r'
+                && t.input.peek(3) == 'u'
+                && t.input.peek(4) == 'e')
             {
                 value = "true";
                 t.input.step(4);
                 return true;
             }
-            else if (t.input.peek() == 'f' || t.input.peek() == 'F'
-              && t.input.peek(2) == 'a' || t.input.peek(2) == 'A'
-              && t.input.peek(3) == 'l' || t.input.peek(3) == 'L'
-              && t.input.peek(4) == 's' || t.input.peek(4) == 'S'
-              && t.input.peek(5) == 'e' || t.input.peek(4) == 'E')
+            else if (t.input.peek() == 'f'
+              && t.input.peek(2) == 'a' 
+              && t.input.peek(3) == 'l' 
+              && t.input.peek(4) == 's' 
+              && t.input.peek(5) == 'e')
             {
                 value = "false";
                 t.input.step(5);
@@ -393,8 +380,6 @@ namespace JSONTokenizer
         }
     }
 
-
-
     public class JSONTokenizer : Tokenizable
     {
 
@@ -403,19 +388,16 @@ namespace JSONTokenizer
             StringTokenizer stringTokenizer = new StringTokenizer();
             if (stringTokenizer.tokenizable(t))
             {
-                Console.WriteLine("INSIDE IF");
                 Token key = stringTokenizer.tokenize(t);
-                Console.WriteLine(key.Type);
-                Console.WriteLine(key.Value);
                 if (key != null)
                 {
+                    key.Type = "key";
                     JSONTokens.Add(key);
                     return true;
                 }
             }
             return false;
         }
-
 
         public bool tokenizeValue(Tokenizer t, List<Token> JSONTokens)
         {
@@ -438,28 +420,19 @@ namespace JSONTokenizer
         public override Token tokenize(Tokenizer t)
         {
             List<Token> JSONTokens = new List<Token>();
-
-            t.input.step();
-            while (t.input.Character != '}')
+            while (t.input.peek() != '}')
             {
                 t.input.step();
-                Console.WriteLine("while");
                 if (tokenizeKey(t, JSONTokens))
                 {
-                    Console.WriteLine("1st if");
-                    //Token subToken;
                     if (t.input.peek() == ':')
                     {
-                        Console.WriteLine("2nd if");
                         t.input.step();
                         if (tokenizeValue(t, JSONTokens))
                         {
-                            Console.WriteLine("3rd if");
-                            if (t.input.peek() == ',' || t.input.peek() == '}')
+                            if (t.input.peek() == ',')
                             {
-                                Console.WriteLine("4rth if");
                                 t.input.step();
-                                //continue;
                             }
                         }                        
                     } else throw new Exception("Not a valid JSON! No colon after the key");
@@ -468,13 +441,12 @@ namespace JSONTokenizer
             return new Token(t.input.Position, t.input.LineNumber, "JSON", "JSON", JSONTokens);
         }
 
-
         class Program
         {
             static void Main(string[] args)
             {
 
-                Tokenizer t = new Tokenizer(new Input("{\"key\":123, \"key2\":444}"), new Tokenizable[] {
+                Tokenizer t = new Tokenizer(new Input("{\"key\":-123e-.12, \"key2\":444  \"array\":[1,[2,3],5], \"h\":{1,2,3}}"), new Tokenizable[] {
                 new JSONTokenizer(),
                 new WhiteSpaceTokenizer(),
                 new NumberTokenizer(),
