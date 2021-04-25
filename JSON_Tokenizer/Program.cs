@@ -287,10 +287,7 @@ namespace JSONTokenizer
             {
                 if (t.input.peek() == '[')
                 {
-
-                    Console.WriteLine("recursion");
                     Token recursionToken = tokenize(t);
-                    Console.WriteLine("After recursion {0}", recursionToken.Value);
                     if (recursionToken != null)
                     {
                         arrayToken.Add(recursionToken);
@@ -455,12 +452,10 @@ namespace JSONTokenizer
                 new BoolTokenizer(),
                 new ArrayTokenizer()
             });
-
                 if (!((t.input.peek() == '{') && (t.input.peek(t.input.Length) == '}')))
                     throw new Exception("Not a valid JSON! Does not begin with { or end with }");
 
                 Token token = t.tokenize();
-                Console.WriteLine(t.input.Position);
 
                 while (token != null)
                 {
