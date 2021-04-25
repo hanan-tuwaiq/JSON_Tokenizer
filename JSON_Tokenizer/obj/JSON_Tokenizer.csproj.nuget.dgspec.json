@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "/Users/hanans/Projects/JSON_Tokenizer/JSON_Tokenizer/JSON_Tokenizer.csproj": {}
+    "C:\\Users\\96655\\OneDrive\\Desktop\\Project\\JSON_Tokenizer\\JSON_Tokenizer\\JSON_Tokenizer.csproj": {}
   },
   "projects": {
-    "/Users/hanans/Projects/JSON_Tokenizer/JSON_Tokenizer/JSON_Tokenizer.csproj": {
+    "C:\\Users\\96655\\OneDrive\\Desktop\\Project\\JSON_Tokenizer\\JSON_Tokenizer\\JSON_Tokenizer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/hanans/Projects/JSON_Tokenizer/JSON_Tokenizer/JSON_Tokenizer.csproj",
+        "projectUniqueName": "C:\\Users\\96655\\OneDrive\\Desktop\\Project\\JSON_Tokenizer\\JSON_Tokenizer\\JSON_Tokenizer.csproj",
         "projectName": "JSON_Tokenizer",
-        "projectPath": "/Users/hanans/Projects/JSON_Tokenizer/JSON_Tokenizer/JSON_Tokenizer.csproj",
-        "packagesPath": "/Users/hanans/.nuget/packages/",
-        "outputPath": "/Users/hanans/Projects/JSON_Tokenizer/JSON_Tokenizer/obj/",
+        "projectPath": "C:\\Users\\96655\\OneDrive\\Desktop\\Project\\JSON_Tokenizer\\JSON_Tokenizer\\JSON_Tokenizer.csproj",
+        "packagesPath": "C:\\Users\\96655\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\96655\\OneDrive\\Desktop\\Project\\JSON_Tokenizer\\JSON_Tokenizer\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/hanans/.config/NuGet/NuGet.Config"
+          "C:\\Users\\96655\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -52,7 +54,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.202/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }
