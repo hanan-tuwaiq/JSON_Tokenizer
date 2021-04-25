@@ -326,10 +326,10 @@ namespace JSONTokenizer
     {
         public override bool tokenizable(Tokenizer t)
         {
-            if (t.input.peek() == 'n' || t.input.peek() == 'N'
-                && t.input.peek(2) == 'u' || t.input.peek(2) == 'U'
-                && t.input.peek(3) == 'l' || t.input.peek(3) == 'L'
-                && t.input.peek(4) == 'l' || t.input.peek(4) == 'L')
+            if (   t.input.peek()  == 'n' 
+                && t.input.peek(2) == 'u'
+                && t.input.peek(3) == 'l'
+                && t.input.peek(4) == 'l')
             {
                 t.input.step(4);
                 return true;
@@ -349,7 +349,7 @@ namespace JSONTokenizer
         public override bool tokenizable(Tokenizer t)
         {
 
-            if (t.input.peek() == 't'
+            if (   t.input.peek()  == 't'
                 && t.input.peek(2) == 'r'
                 && t.input.peek(3) == 'u'
                 && t.input.peek(4) == 'e')
@@ -379,7 +379,6 @@ namespace JSONTokenizer
 
     public class JSONTokenizer : Tokenizable
     {
-
         public bool tokenizeKey(Tokenizer t, List<Token> JSONTokens)
         {
             StringTokenizer stringTokenizer = new StringTokenizer();
@@ -398,11 +397,12 @@ namespace JSONTokenizer
 
         public bool tokenizeValue(Tokenizer t, List<Token> JSONTokens)
         {
-            Token subToken;
-            subToken = t.tokenize();
-            if (subToken != null)
+            Token value;
+            value = t.tokenize();
+            if (value != null)
             {
-                JSONTokens.Add(subToken);
+                //value.Type += "  JValue";
+                JSONTokens.Add(value);
                 return true;
             }
             else throw new Exception("Not a valid JSON! value is not a valid type");
@@ -425,6 +425,7 @@ namespace JSONTokenizer
                     if (t.input.peek() == ':')
                     {
                         t.input.step();
+
                         if (tokenizeValue(t, JSONTokens))
                         {
                             if (t.input.peek() == ',')
@@ -433,7 +434,23 @@ namespace JSONTokenizer
                             }
                         }                        
                     } else throw new Exception("Not a valid JSON! No colon after the key");
+                    
+                    if (t.input.peek() == '{')
+                    {
+                        Console.WriteLine("JSON recursion");
+                        Token recursionToken = tokenize(t);
+                        if (recursionToken != null)
+                        {
+                            JSONTokens.Add(recursionToken);
+                        } else throw new Exception("Not a valid element in the JSON");
+                    } 
                 }
+            }
+
+            t.input.step();
+            foreach (var item in JSONTokens)
+            {
+                Console.WriteLine(item.Value);
             }
             return new Token(t.input.Position, t.input.LineNumber, "JSON", "JSON", JSONTokens);
         }
@@ -443,7 +460,7 @@ namespace JSONTokenizer
             static void Main(string[] args)
             {
 
-                Tokenizer t = new Tokenizer(new Input("{\"key\":-123e-.12, \"key2\":444  \"array\":[1,[2,3],5], \"h\":{1,2,3}}"), new Tokenizable[] {
+                Tokenizer t = new Tokenizer(new Input("{\"key\":-123e-.12, \"Amal\":{9,7,6} \"key2\":444  \"array\":[1,[2,3],5], \"h\":{1,2,3, [6,7,8]}}"), new Tokenizable[] {
                 new JSONTokenizer(),
                 new WhiteSpaceTokenizer(),
                 new NumberTokenizer(),
@@ -456,21 +473,29 @@ namespace JSONTokenizer
                     throw new Exception("Not a valid JSON! Does not begin with { or end with }");
 
                 Token token = t.tokenize();
+                List<Token> tokensList = new List<Token>();
 
                 while (token != null)
                 {
                     Console.WriteLine("In Main() value:" + token.Value + "===" + "type:" + token.Type);
-
+                    tokensList.Add(token);
                     if (token.Type == "array" || token.Type == "JSON")
                     {
                         foreach (var item in token.Tokens)
                         {
-                            Console.WriteLine("    element value:" + item.Value + "     " + "element type:" + item.Type);
+                            Console.WriteLine("  element:" + item.Value + "     " + "type:" + item.Type);
                             if (item.Type == "array" || item.Type == "JSON")
                             {
                                 foreach (var subItem in item.Tokens)
                                 {
-                                    Console.WriteLine("       nested element value:" + subItem.Value + "     " + "nested element type:" + subItem.Type);
+                                    Console.WriteLine("    nested element:" + subItem.Value + "     " + "type:" + subItem.Type);
+                                    if (subItem.Type == "array" || subItem.Type == "JSON")
+                                    {
+                                        foreach (var sub in item.Tokens)
+                                        {
+                                            Console.WriteLine("       deep nested element:" + sub.Value + "     " + "type:" + sub.Type);
+                                        }
+                                    }
                                 }
                             }
                         }
